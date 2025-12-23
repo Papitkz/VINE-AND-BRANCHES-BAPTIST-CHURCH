@@ -14,41 +14,58 @@
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcTKSJUbRJDljxITqJwaT99FQM4XKFRQCO5Q&s"
             alt="Loading..."
-            class="w-12 h-12 animate-spin"
+            class="w-12 h-12 sm:w-16 sm:h-16 animate-spin"
           />
-          <p class="mt-4 text-green-700 font-medium">Loading...</p>
+          <p class="mt-4 text-green-700 font-medium text-base sm:text-lg">Loading...</p>
         </div>
       </div>
     </transition>
 
     <!-- Professional Transparent Appbar -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="{ 'scrolled': isScrolled }">
-      <div class="container mx-auto px-4 sm:px-6 py-4">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <div class="flex justify-between items-center">
           <!-- Logo & Title -->
           <div class="flex items-center gap-2 sm:gap-3">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcTKSJUbRJDljxITqJwaT99FQM4XKFRQCO5Q&s"
               alt="Vine & Branches Logo"
-              class="h-8 sm:h-10 w-auto"
+              class="h-8 sm:h-10 lg:h-12 w-auto"
             />
-            <span class="text-lg sm:text-xl md:text-2xl font-bold text-white hidden sm:inline">VINE AND BRANCHES BAPTIST CHURCH</span>
-            <span class="text-lg sm:text-xl md:text-2xl font-bold text-white sm:hidden">VBBC</span>
+            <span class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white hidden sm:inline">VINE AND BRANCHES BAPTIST CHURCH</span>
+            <span class="text-base sm:text-lg md:text-xl font-bold text-white sm:hidden">VBBC</span>
           </div>
 
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex items-center space-x-4 sm:space-x-8">
+          <nav class="hidden lg:flex items-center space-x-4 sm:space-x-6 lg:space-x-8">
             <a 
               v-for="item in menuItems" 
               :key="item.title"
               :href="item.href" 
-              class="text-white font-medium hover:text-green-200 transition-all duration-300 relative group text-sm sm:text-base nav-link"
+              class="text-white font-medium hover:text-green-200 transition-all duration-300 relative group text-sm sm:text-base nav-link py-2"
               @click="handleNavClick"
             >
               {{ item.title }}
               <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-200 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <button class="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm sm:text-base">
+              Get Connected
+            </button>
+          </nav>
+
+          <!-- Tablet Navigation (Medium Screens) -->
+          <nav class="hidden md:flex lg:hidden items-center space-x-2 sm:space-x-4">
+            <a 
+              v-for="item in menuItems.slice(0, 4)" 
+              :key="item.title"
+              :href="item.href" 
+              class="text-white font-medium hover:text-green-200 transition-all duration-300 relative group text-xs sm:text-sm nav-link py-1"
+              @click="handleNavClick"
+            >
+              {{ item.title }}
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-200 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <button class="px-2 sm:px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-xs sm:text-sm">
               Get Connected
             </button>
           </nav>
@@ -111,25 +128,25 @@
         <img src="https://picsum.photos/seed/church-building/1920/1080.jpg" alt="Church Building" class="w-full h-full object-cover">
       </div>
       
-      <div class="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
-       <div class="mb-6 flex justify-center animate-fade-in-down">
+      <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div class="mb-6 flex justify-center animate-fade-in-down">
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcTKSJUbRJDljxITqJwaT99FQM4XKFRQCO5Q&s" 
             alt="Vine & Branches Logo" 
-            class="h-24 w-auto sm:h-32 bg-white rounded-lg p-2 shadow-lg mt-15 sm:mt-0"
+            class="h-20 w-auto sm:h-24 md:h-28 lg:h-32 bg-white rounded-lg p-2 shadow-lg mt-15 sm:mt-0"
           >
         </div>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 animate-fade-in-down">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-white mb-4 animate-fade-in-down">
           VINE AND BRANCHES BAPTIST CHURCH
         </h1>
-        <p class="text-lg sm:text-xl md:text-2xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
           "The steadfast love of the LORD never ceases; His mercies never come to an end; they are new every morning; great is your faithfulness!." - Lamentations 3:22-23
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animation-delay-600">
-          <a href="#branches" class="px-6 sm:px-8 py-3 bg-white text-green-700 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+          <a href="#branches" class="px-4 sm:px-6 lg:px-8 py-3 bg-white text-green-700 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
             Our Branches
           </a>
-          <a href="#services" class="px-6 sm:px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+          <a href="#services" class="px-4 sm:px-6 lg:px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
             Service Times
           </a>
         </div>
@@ -145,34 +162,34 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-white to-green-50">
+    <section id="about" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-green-50">
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
           <div class="order-2 md:order-1">
-            <h2 class="text-3xl sm:text-4xl font-bold text-green-800 mb-6">Welcome to Our Church</h2>
-            <p class="text-base sm:text-lg text-gray-700 mb-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 mb-6">Welcome to Our Church</h2>
+            <p class="text-sm sm:text-base md:text-lg text-gray-700 mb-6">
               At Vine & Branches Baptist Church, we are a community of believers dedicated to growing in faith, serving our community, and sharing the love of Christ with all.
             </p>
-            <p class="text-base sm:text-lg text-gray-700 mb-6">
+            <p class="text-sm sm:text-base md:text-lg text-gray-700 mb-6">
               Our church has grown to include multiple branches across the region, each committed to creating a welcoming environment where individuals and families can connect with God and each other through meaningful worship, biblical teaching, and authentic fellowship.
             </p>
             <div class="grid grid-cols-3 gap-4 mb-8">
               <div class="text-center">
-                <div class="text-2xl sm:text-3xl font-bold text-green-600">1000+</div>
-                <div class="text-gray-600 text-sm sm:text-base">Members</div>
+                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">1000+</div>
+                <div class="text-gray-600 text-xs sm:text-sm md:text-base">Members</div>
               </div>
               <div class="text-center">
-                <div class="text-2xl sm:text-3xl font-bold text-green-600">3</div>
-                <div class="text-gray-600 text-sm sm:text-base">Branches</div>
+                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">3</div>
+                <div class="text-gray-600 text-xs sm:text-sm md:text-base">Branches</div>
               </div>
               <div class="text-center">
-                <div class="text-2xl sm:text-3xl font-bold text-green-600">18+</div>
-                <div class="text-gray-600 text-sm sm:text-base">Years</div>
+                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">18+</div>
+                <div class="text-gray-600 text-xs sm:text-sm md:text-base">Years</div>
               </div>
             </div>
-            <a href="#branches" class="inline-flex items-center px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+            <a href="#branches" class="inline-flex items-center px-3 sm:px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
               Visit Our Branches
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
               </svg>
             </a>
@@ -185,10 +202,10 @@
     </section>
 
     <!-- Branches Section -->
-    <section id="branches" class="py-16 sm:py-20 px-4 sm:px-6 bg-white">
+    <section id="branches" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-green-800">Our Branches</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 sm:mb-12 text-gray-600">Find a Vine & Branches community near you</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-green-800">Our Branches</h2>
+        <p class="text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 text-gray-600">Find a Vine & Branches community near you</p>
         
         <!-- Branch Tabs - Always Visible with Sticky Position -->
         <div class="sticky top-16 z-40 bg-white py-4 mb-8 border-b border-gray-100">
@@ -199,7 +216,7 @@
                 :key="branch.id"
                 @click="activeBranch = branch.id"
                 :class="[
-                  'px-3 sm:px-6 py-2 sm:py-3 text-sm font-medium transition-all duration-300 whitespace-nowrap',
+                  'px-2 sm:px-3 md:px-4 lg:px-6 py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-300 whitespace-nowrap',
                   activeBranch === branch.id 
                     ? 'bg-green-600 text-white shadow-md transform scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
@@ -214,70 +231,70 @@
         <!-- Branch Content -->
         <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
           <div>
-            <div class="bg-green-50 rounded-lg p-6 sm:p-8 h-full">
-              <h3 class="text-xl sm:text-2xl font-bold mb-6 text-green-800">{{ currentBranch.name }}</h3>
+            <div class="bg-green-50 rounded-lg p-4 sm:p-6 md:p-8 h-full">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-green-800">{{ currentBranch.name }}</h3>
               
               <div class="mb-6">
-                <h4 class="text-lg font-semibold mb-3 text-green-700 flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <h4 class="text-base sm:text-lg font-semibold mb-3 text-green-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   Head Pastor
                 </h4>
                 <div class="flex items-center mb-4">
-                  <img :src="currentBranch.pastor.image" :alt="currentBranch.pastor.name" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover mr-4">
+                  <img :src="currentBranch.pastor.image" :alt="currentBranch.pastor.name" class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full object-cover mr-4">
                   <div>
-                    <p class="font-semibold text-gray-800">{{ currentBranch.pastor.name }}</p>
-                    <p class="text-gray-600 text-sm sm:text-base">{{ currentBranch.pastor.title }}</p>
+                    <p class="font-semibold text-gray-800 text-sm sm:text-base">{{ currentBranch.pastor.name }}</p>
+                    <p class="text-gray-600 text-xs sm:text-sm md:text-base">{{ currentBranch.pastor.title }}</p>
                   </div>
                 </div>
-                <p class="text-gray-700 text-sm sm:text-base">{{ currentBranch.pastor.bio }}</p>
+                <p class="text-gray-700 text-xs sm:text-sm md:text-base">{{ currentBranch.pastor.bio }}</p>
               </div>
               
               <div class="space-y-4">
                 <div class="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <div>
-                    <p class="font-semibold text-green-800 text-sm sm:text-base">Address</p>
-                    <p class="text-gray-700 text-sm sm:text-base">{{ currentBranch.address }}</p>
+                    <p class="font-semibold text-green-800 text-xs sm:text-sm md:text-base">Address</p>
+                    <p class="text-gray-700 text-xs sm:text-sm md:text-base">{{ currentBranch.address }}</p>
                   </div>
                 </div>
                 
                 <div class="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <p class="font-semibold text-green-800 text-sm sm:text-base">Service Times</p>
-                    <p class="text-gray-700 text-sm sm:text-base">{{ currentBranch.serviceTimes }}</p>
+                    <p class="font-semibold text-green-800 text-xs sm:text-sm md:text-base">Service Times</p>
+                    <p class="text-gray-700 text-xs sm:text-sm md:text-base">{{ currentBranch.serviceTimes }}</p>
                   </div>
                 </div>
                 
                 <div class="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-green-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <div>
-                    <p class="font-semibold text-green-800 text-sm sm:text-base">Contact</p>
-                    <p class="text-gray-700 text-sm sm:text-base">{{ currentBranch.contact.phone }}</p>
-                    <p class="text-gray-700 text-sm sm:text-base">{{ currentBranch.contact.email }}</p>
+                    <p class="font-semibold text-green-800 text-xs sm:text-sm md:text-base">Contact</p>
+                    <p class="text-gray-700 text-xs sm:text-sm md:text-base">{{ currentBranch.contact.phone }}</p>
+                    <p class="text-gray-700 text-xs sm:text-sm md:text-base">{{ currentBranch.contact.email }}</p>
                   </div>
                 </div>
               </div>
               
               <div class="mt-6 sm:mt-8 flex flex-wrap gap-3">
-                <a :href="currentBranch.directions" target="_blank" class="inline-flex items-center px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+                <a :href="currentBranch.directions" target="_blank" class="inline-flex items-center px-3 sm:px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm md:text-base">
                   Get Directions
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                   </svg>
                 </a>
-                <a :href="`tel:${currentBranch.contact.phone.replace(/\D/g, '')}`" class="inline-flex items-center px-4 sm:px-6 py-3 bg-white border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+                <a :href="`tel:${currentBranch.contact.phone.replace(/\D/g, '')}`" class="inline-flex items-center px-3 sm:px-4 md:px-6 py-3 bg-white border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm md:text-base">
                   Call Us
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </a>
@@ -286,7 +303,7 @@
           </div>
           
           <div>
-            <div class="rounded-lg overflow-hidden h-full min-h-[300px] sm:min-h-[400px] shadow-lg">
+            <div class="rounded-lg overflow-hidden h-full min-h-[250px] sm:min-h-[350px] md:min-h-[400px] shadow-lg">
               <iframe 
                 :src="currentBranch.mapUrl" 
                 width="100%" 
@@ -294,7 +311,7 @@
                 style="border:0;" 
                 allowfullscreen="" 
                 loading="lazy"
-                class="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                class="w-full h-full min-h-[250px] sm:min-h-[350px] md:min-h-[400px]">
               </iframe>
             </div>
           </div>
@@ -303,44 +320,44 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16 sm:py-20 px-4 sm:px-6 bg-green-700 text-white">
+    <section id="services" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-green-700 text-white">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Service Times</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 sm:mb-12 text-green-100">Join us for worship and fellowship</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4">Service Times</h2>
+        <p class="text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 text-green-100">Join us for worship and fellowship</p>
         
         <!-- Desktop View - Grid -->
-        <div class="hidden md:grid md:grid-cols-3 gap-8">
-          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+        <div class="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
             <div class="text-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold mb-2 text-center">Sunday School</h3>
-            <p class="text-lg text-center mb-4">08:00 AM - 09:00 AM</p>
-            <p class="text-green-100">Bible study classes for all ages, from children to adults.</p>
+            <h3 class="text-xl sm:text-2xl font-semibold mb-2 text-center">Sunday School</h3>
+            <p class="text-base sm:text-lg text-center mb-4">08:00 AM - 09:00 AM</p>
+            <p class="text-green-100 text-sm sm:text-base">Bible study classes for all ages, from children to adults.</p>
           </div>
           
-          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
             <div class="text-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold mb-2 text-center">Sunday Service</h3>
-            <p class="text-lg text-center mb-4">9:00 AM - 11:30 AM</p>
-            <p class="text-green-100">Join us for our main worship service with contemporary music and biblical teaching.</p>
+            <h3 class="text-xl sm:text-2xl font-semibold mb-2 text-center">Sunday Service</h3>
+            <p class="text-base sm:text-lg text-center mb-4">9:00 AM - 11:30 AM</p>
+            <p class="text-green-100 text-sm sm:text-base">Join us for our main worship service with contemporary music and biblical teaching.</p>
           </div>
           
-          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
             <div class="text-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 mx-auto text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-semibold mb-2 text-center">Midweek Service</h3>
-            <p class="text-lg text-center mb-4">Wednesday 7:00 PM - 8:30 PM</p>
-            <p class="text-green-100">Join us for prayer, worship, and in-depth Bible study.</p>
+            <h3 class="text-xl sm:text-2xl font-semibold mb-2 text-center">Midweek Service</h3>
+            <p class="text-base sm:text-lg text-center mb-4">Wednesday 7:00 PM - 8:30 PM</p>
+            <p class="text-green-100 text-sm sm:text-base">Join us for prayer, worship, and in-depth Bible study.</p>
           </div>
         </div>
         
@@ -397,28 +414,26 @@
           
           <!-- Carousel Controls -->
           <div class="flex justify-center mt-6 space-x-2">
-            <div class="flex justify-center mt-6 space-x-2">
-              <button 
-                v-for="(_, index) in 3" 
-                :key="index"
-                @click="serviceSlideIndex = index"
-                :class="[
-                  'w-3 h-3 rounded-full transition-all duration-300',
-                  serviceSlideIndex === index ? 'bg-white' : 'bg-white/50'
-                ]"
-                :aria-label="`Go to service ${index + 1}`"
-              ></button>
-            </div>
+            <button 
+              v-for="(_, index) in 3" 
+              :key="index"
+              @click="serviceSlideIndex = index"
+              :class="[
+                'w-3 h-3 rounded-full transition-all duration-300',
+                serviceSlideIndex === index ? 'bg-white' : 'bg-white/50'
+              ]"
+              :aria-label="`Go to service ${index + 1}`"
+            ></button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-16 sm:py-20 px-4 sm:px-6 bg-white">
+    <section id="gallery" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-green-800">Our Gallery</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 sm:mb-12 text-gray-600">A glimpse into our church life and activities</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-green-800">Our Gallery</h2>
+        <p class="text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 text-gray-600">A glimpse into our church life and activities</p>
         
         <!-- Branch Selector -->
         <div class="mb-6">
@@ -496,7 +511,7 @@
                 :key="branch.id"
                 @click="activeGalleryBranch = branch.id"
                 :class="[
-                  'px-6 py-2.5 text-sm font-semibold transition-all duration-300',
+                  'px-4 sm:px-6 py-2.5 text-sm font-semibold transition-all duration-300',
                   activeGalleryBranch === branch.id 
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
@@ -584,7 +599,7 @@
                 :key="category.id"
                 @click="activeTanzaCategory = category.id"
                 :class="[
-                  'px-6 py-2.5 text-sm font-semibold transition-all duration-300',
+                  'px-3 sm:px-4 md:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
                   activeTanzaCategory === category.id 
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
@@ -672,7 +687,7 @@
                 :key="category"
                 @click="activeGalleryCategory = category"
                 :class="[
-                  'px-6 py-2.5 text-sm font-semibold transition-all duration-300',
+                  'px-3 sm:px-4 md:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
                   activeGalleryCategory === category 
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
@@ -686,14 +701,14 @@
         
         <!-- Gallery Container -->
         <div class="gallery-container">
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
             <div 
               v-for="(image, index) in displayedGalleryImages" 
               :key="index"
               class="relative overflow-hidden rounded-lg cursor-pointer group"
               @click="openImageModal(image, index)"
             >
-              <img :src="image.src" :alt="image.alt" class="w-full h-36 sm:h-48 object-cover transition-transform duration-300 group-hover:scale-110">
+              <img :src="image.src" :alt="image.alt" class="w-full h-32 sm:h-40 md:h-48 object-cover transition-transform duration-300 group-hover:scale-110">
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2 sm:p-4">
                 <div>
                   <p class="text-white font-semibold text-xs sm:text-sm">{{ image.title }}</p>
@@ -708,7 +723,7 @@
           <button 
             v-if="hasMoreImages" 
             @click="loadMoreImages" 
-            class="px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+            class="px-3 sm:px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm md:text-base"
           >
             <span v-if="!isLoadingMore">View More Photos ({{ remainingImagesCount }} remaining)</span>
             <span v-else class="flex items-center">
@@ -725,64 +740,115 @@
     </section>
 
     <!-- Ministries Section -->
-    <section id="ministries" class="py-16 sm:py-20 px-4 sm:px-6 bg-white">
+    <section id="ministries" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-green-800">Our Ministries</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 sm:mb-12 text-gray-600">Find a place to grow and serve</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-green-800">Our Ministries</h2>
+        <p class="text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 text-gray-600">Find a place to grow and serve</p>
         
         <!-- Desktop View - Grid -->
-        <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-green-50 rounded-lg p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+        <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div class="bg-green-50 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
             <div class="flex flex-col items-center mb-4">
-              <div class="bg-green-600 text-white w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="bg-green-600 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-green-800">Children's Ministry</h3>
+              <h3 class="text-lg sm:text-xl font-semibold text-green-800">Children's Ministry</h3>
             </div>
-            <p class="text-gray-600 text-center">Nurturing faith in our youngest members through age-appropriate teaching and activities.</p>
+            <p class="text-gray-600 text-center text-sm sm:text-base">Nurturing faith in our youngest members through age-appropriate teaching and activities.</p>
           </div>
           
-          <div class="bg-green-50 rounded-lg p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-green-50 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
             <div class="flex flex-col items-center mb-4">
-              <div class="bg-green-600 text-white w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="bg-green-600 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-green-800">Youth Ministry</h3>
+              <h3 class="text-lg sm:text-xl font-semibold text-green-800">Youth Ministry</h3>
             </div>
-            <p class="text-gray-600 text-center">Helping teens grow in their faith and navigate challenges of adolescence.</p>
+            <p class="text-gray-600 text-center text-sm sm:text-base">Helping teens grow in their faith and navigate challenges of adolescence.</p>
           </div>
           
-          <div class="bg-green-50 rounded-lg p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-green-50 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
             <div class="flex flex-col items-center mb-4">
-              <div class="bg-green-600 text-white w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="bg-green-600 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-green-800">Women's Ministry</h3>
+              <h3 class="text-lg sm:text-xl font-semibold text-green-800">Women's Ministry</h3>
             </div>
-            <p class="text-gray-600 text-center">Building community and spiritual growth among women of all ages.</p>
+            <p class="text-gray-600 text-center text-sm sm:text-base">Building community and spiritual growth among women of all ages.</p>
           </div>
           
-          <div class="bg-green-50 rounded-lg p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-green-50 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
             <div class="flex flex-col items-center mb-4">
-              <div class="bg-green-600 text-white w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="bg-green-600 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:bg-green-700 transition-colors duration-300 group-hover:scale-110 transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-green-800">Men's Ministry</h3>
+              <h3 class="text-lg sm:text-xl font-semibold text-green-800">Men's Ministry</h3>
             </div>
-            <p class="text-gray-600 text-center">Equipping men to be spiritual leaders in their homes, church, and community.</p>
+            <p class="text-gray-600 text-center text-sm sm:text-base">Equipping men to be spiritual leaders in their homes, church, and community.</p>
+          </div>
+        </div>
+        
+        <!-- Tablet View - 2 Columns Grid -->
+        <div class="hidden sm:hidden md:hidden grid grid-cols-2 gap-4">
+          <div class="bg-green-50 rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+            <div class="flex flex-col items-center mb-4">
+              <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-green-800">Children's Ministry</h3>
+            </div>
+            <p class="text-gray-600 text-center text-sm">Nurturing faith in our youngest members through age-appropriate teaching and activities.</p>
+          </div>
+          
+          <div class="bg-green-50 rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+            <div class="flex flex-col items-center mb-4">
+              <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-green-800">Youth Ministry</h3>
+            </div>
+            <p class="text-gray-600 text-center text-sm">Helping teens grow in their faith and navigate challenges of adolescence.</p>
+          </div>
+          
+          <div class="bg-green-50 rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+            <div class="flex flex-col items-center mb-4">
+              <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-green-800">Women's Ministry</h3>
+            </div>
+            <p class="text-gray-600 text-center text-sm">Building community and spiritual growth among women of all ages.</p>
+          </div>
+          
+          <div class="bg-green-50 rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+            <div class="flex flex-col items-center mb-4">
+              <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-green-800">Men's Ministry</h3>
+            </div>
+            <p class="text-gray-600 text-center text-sm">Equipping men to be spiritual leaders in their homes, church, and community.</p>
           </div>
         </div>
         
         <!-- Mobile View - Carousel -->
-        <div class="md:hidden relative">
+        <div class="sm:hidden relative">
           <div class="overflow-hidden">
             <div 
               class="flex transition-transform duration-500 ease-in-out"
@@ -852,42 +918,42 @@
           
           <!-- Carousel Controls -->
           <div class="flex justify-center mt-6 space-x-2">
-              <button 
-                v-for="(_, index) in 4" 
-                :key="index"
-                @click="ministrySlideIndex = index"
-                :class="[
-                  'w-3 h-3 rounded-full transition-all duration-300',
-                  ministrySlideIndex === index ? 'bg-green-600' : 'bg-green-300'
-                ]"
-                :aria-label="`Go to ministry ${index + 1}`"
-              ></button>
+            <button 
+              v-for="(_, index) in 4" 
+              :key="index"
+              @click="ministrySlideIndex = index"
+              :class="[
+                'w-3 h-3 rounded-full transition-all duration-300',
+                ministrySlideIndex === index ? 'bg-green-600' : 'bg-green-300'
+              ]"
+              :aria-label="`Go to ministry ${index + 1}`"
+            ></button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-r from-green-600 to-green-700 text-white">
+    <section id="contact" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-600 to-green-700 text-white">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold mb-4">Stay Connected</h2>
-        <p class="text-lg sm:text-xl mb-8 text-green-100">Subscribe to our newsletter for updates, events, and inspirational content</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Stay Connected</h2>
+        <p class="text-base sm:text-lg md:text-xl mb-8 text-green-100">Subscribe to our newsletter for updates, events, and inspirational content</p>
         
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-green-900 text-white py-8 sm:py-12 px-4 sm:px-6">
+    <footer class="bg-green-900 text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-4 gap-6 sm:gap-8 mb-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8">
           <div>
-            <h3 class="text-xl sm:text-2xl font-bold mb-4 text-green-300">Vine & Branches</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-green-300">Vine & Branches</h3>
             <p class="text-green-100 mb-4">Baptist Church</p>
             <p class="text-green-200 text-sm sm:text-base">"The steadfast love of LORD never ceases; His mercies never come to an end; they are new every morning; great is your faithfulness!." - Lamentations 3:22-23</p>
           </div>
           
           <div>
-            <h4 class="text-lg font-semibold mb-4 text-green-300">Quick Links</h4>
+            <h4 class="text-base sm:text-lg font-semibold mb-4 text-green-300">Quick Links</h4>
             <ul class="space-y-2">
               <li><a href="#about" class="text-green-100 hover:text-white transition-colors text-sm sm:text-base">About Us</a></li>
               <li><a href="#branches" class="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Our Branches</a></li>
@@ -897,7 +963,7 @@
           </div>
           
           <div>
-            <h4 class="text-lg font-semibold mb-4 text-green-300">Resources</h4>
+            <h4 class="text-base sm:text-lg font-semibold mb-4 text-green-300">Resources</h4>
             <ul class="space-y-2">
               <li><a href="#" class="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Sermons</a></li>
               <li><a href="#" class="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Blog</a></li>
@@ -907,8 +973,8 @@
           </div>
           
           <div>
-            <h4 class="text-lg font-semibold mb-4 text-green-300">Connect With Us</h4>
-            <div class="flex space-x-4 mb-6">
+            <h4 class="text-base sm:text-lg font-semibold mb-4 text-green-300">Connect With Us</h4>
+            <div class="flex space-x-3 sm:space-x-4 mb-6">
               <a href="#" class="bg-green-700 hover:bg-green-600 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -949,7 +1015,7 @@
       class="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 z-50"
       :class="{ 'animate-pulse': showGoToTop }"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
     </button>
@@ -976,7 +1042,7 @@
           @click="closeImageModal"
           class="close-button absolute top-4 right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10 p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -984,11 +1050,11 @@
         <!-- Previous Button -->
         <button 
           @click="navigateImage(-1)"
-          class="modal-nav-button absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-all duration-200 z-10 p-3 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 hover:scale-110"
+          class="modal-nav-button absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-all duration-200 z-10 p-2 sm:p-3 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 hover:scale-110"
           :class="{ 'opacity-50 cursor-not-allowed': filteredGalleryImages.length <= 1 }"
           :disabled="filteredGalleryImages.length <= 1"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -996,60 +1062,60 @@
         <!-- Next Button -->
         <button 
           @click="navigateImage(1)"
-          class="modal-nav-button absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-all duration-200 z-10 p-3 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 hover:scale-110"
+          class="modal-nav-button absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-all duration-200 z-10 p-2 sm:p-3 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 hover:scale-110"
           :class="{ 'opacity-50 cursor-not-allowed': filteredGalleryImages.length <= 1 }"
           :disabled="filteredGalleryImages.length <= 1"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
 
-          <div class="relative max-w-7xl mx-auto w-full h-full flex items-center justify-center">
-            <transition
-              enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 transform scale-95"
-              enter-to-class="opacity-100 transform scale-100"
-              leave-active-class="transition-all duration-200 ease-in"
-              leave-from-class="opacity-100 transform scale-100"
-              leave-to-class="opacity-0 transform scale-95"
-              mode="out-in"
+        <div class="relative max-w-7xl mx-auto w-full h-full flex items-center justify-center">
+          <transition
+            enter-active-class="transition-all duration-300 ease-out"
+            enter-from-class="opacity-0 transform scale-95"
+            enter-to-class="opacity-100 transform scale-100"
+            leave-active-class="transition-all duration-200 ease-in"
+            leave-from-class="opacity-100 transform scale-100"
+            leave-to-class="opacity-0 transform scale-95"
+            mode="out-in"
+          >
+            <div 
+              v-if="selectedImage.src" 
+              class="relative"
+              :key="currentImageIndex"
+              @click="closeImageModal"
             >
-              <div 
-                v-if="selectedImage.src" 
-                class="relative"
-                :key="currentImageIndex"
-                @click="closeImageModal"
+              <img 
+                :src="selectedImage.src" 
+                :alt="selectedImage.alt" 
+                class="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105"
               >
-                <img 
-                  :src="selectedImage.src" 
-                  :alt="selectedImage.alt" 
-                  class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105"
-                >
-                
-                <!-- Image Info Overlay (completely transparent when clicking) -->
-                <div 
-                  v-if="isImageModalOpen"
-                  class="absolute inset-0 bg-transparent"
-                  @click="closeImageModal"
-                ></div>
-              </div>
-            </transition>
-          </div>
+              
+              <!-- Image Info Overlay (completely transparent when clicking) -->
+              <div 
+                v-if="isImageModalOpen"
+                class="absolute inset-0 bg-transparent"
+                @click="closeImageModal"
+              ></div>
+            </div>
+          </transition>
+        </div>
 
-          <!-- Image Counter -->
-          <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-50 px-4 py-2 rounded-full text-sm">
+        <!-- Image Counter -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-50 px-4 py-2 rounded-full text-sm">
           {{ currentImageIndex + 1 }} / {{ filteredGalleryImages.length }}
         </div>
 
         <!-- Thumbnail Strip -->
-        <div class="thumbnail-strip absolute bottom-20 left-0 right-0 overflow-x-auto px-4">
+        <div class="thumbnail-strip absolute bottom-16 sm:bottom-20 left-0 right-0 overflow-x-auto px-4">
           <div class="flex space-x-2 justify-center pb-2">
             <div 
               v-for="(image, index) in filteredGalleryImages.slice(Math.max(0, currentImageIndex - 3), currentImageIndex + 4)" 
               :key="index"
               @click="goToImage(Math.max(0, currentImageIndex - 3) + index)"
-              class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 border-2"
+              class="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 border-2"
               :class="{ 
                 'border-white scale-110': Math.max(0, currentImageIndex - 3) + index === currentImageIndex,
                 'border-transparent opacity-60 hover:opacity-100': Math.max(0, currentImageIndex - 3) + index !== currentImageIndex
@@ -1097,16 +1163,13 @@ const menuItems = [
 const activeBranch = ref('tanza');
 const activeGalleryBranch = ref('tanza');
 
-// In your branches data, update mapUrl and directions for each branch:
-
 const branches = ref([
   {
     id: 'manila',
     name: 'Manila Branch',
     address: '2332 Granate, San Andres Bukid, Manila, Metro Manila',
-    // Update with Manila embed URL
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.509560281616!2d120.98321931484556!3d14.599512489777773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90b8e0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sManila%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
-    directions: 'https://maps.app.goo.gl/kZwP1W4xPiDV6NENA', // Use the original URL for directions
+    directions: 'https://maps.app.goo.gl/kZwP1W4xPiDV6NENA',
     serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
     pastor: {
       name: ' - ',
@@ -1123,7 +1186,6 @@ const branches = ref([
     id: 'tanza',
     name: 'Tanza Branch',
     address: '222 Antero Soriano Hwy, Tanza, Cavite',
-    // Update with Tanza embed URL
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3865.8890883820385!2d120.86092531484097!3d14.39771188993426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c8e1b0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sTanza%2C%20Cavite%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
     directions: 'https://www.google.com/maps/dir/?api=1&destination=Tanza%2C%20Cavite%2C%20Philippines',
     serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
@@ -1142,9 +1204,8 @@ const branches = ref([
     id: 'lingayen',
     name: 'Lingayen Branch',
     address: 'Libsong East, 012 Tomelden Street, Libsong Rd, East, Lingayen, 2401 Pangasinan',
-    // Update with Lingayen embed URL
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.509560281616!2d120.98321931484556!3d14.599512489777773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90b8e0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sLingayen%2C%20Pangasinan%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
-    directions: 'https://maps.app.goo.gl/PcknS3o221VyQ8Yz5', // Use the original URL for directions
+    directions: 'https://maps.app.goo.gl/PcknS3o221VyQ8Yz5',
     serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
     pastor: {
       name: ' - ',
@@ -1429,7 +1490,7 @@ const loadMoreImages = () => {
     currentPage.value++;
     isLoadingMore.value = false;
   }, 1000);
-};
+}
 
 // Reset pagination when filters change
 const resetPagination = () => {
@@ -2007,6 +2068,57 @@ header.scrolled {
   .close-button svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+/* Tablet-specific styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .gallery-container {
+    max-height: 500px;
+  }
+  
+  .modal-nav-button {
+    padding: 10px;
+  }
+   
+  .modal-nav-button svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .close-button {
+    padding: 10px;
+  }
+  
+  .close-button svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Large desktop styles */
+@media (min-width: 1440px) {
+  .max-w-6xl {
+    max-width: 1400px;
+  }
+}
+
+/* Extra large desktop styles */
+@media (min-width: 1920px) {
+  .max-w-6xl {
+    max-width: 1600px;
+  }
+  
+  h1 {
+    font-size: 4rem;
+  }
+  
+  h2 {
+    font-size: 3rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
   }
 }
 
