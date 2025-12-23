@@ -15,8 +15,6 @@ export default defineConfig({
     Components({
       resolvers: [
         IconsResolver({
-          // You can add 'mdi' here if you want to use unplugin-icons for mdi
-          // but for Vuetify, we will configure it differently
           enabledCollections: ['lucide'], 
         }),
       ],
@@ -31,7 +29,5 @@ export default defineConfig({
     host: '10.169.130.43',
     port: 2225
   },
-  // This is optional but can be helpful
   assetsInclude: ['**/*.woff', '**/*.woff2', '**/*.ttf', '**/*.eot']
-  // REMOVED: optimizeDeps: { include: ['@mdi/font'] }
 })

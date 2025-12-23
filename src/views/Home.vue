@@ -33,7 +33,7 @@
               class="h-8 sm:h-10 w-auto"
             />
             <span class="text-lg sm:text-xl md:text-2xl font-bold text-white hidden sm:inline">VINE AND BRANCHES BAPTIST CHURCH</span>
-            <span class="text-lg sm:text-xl md:text-2xl font-bold text-white sm:hidden">V&B CHURCH</span>
+            <span class="text-lg sm:text-xl md:text-2xl font-bold text-white sm:hidden">VBBC</span>
           </div>
 
           <!-- Desktop Navigation -->
