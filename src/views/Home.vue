@@ -42,12 +42,13 @@
               v-for="item in menuItems" 
               :key="item.title"
               :href="item.href" 
-              class="text-white font-medium hover:text-green-200 transition-colors duration-300 relative group text-sm sm:text-base"
+              class="text-white font-medium hover:text-green-200 transition-all duration-300 relative group text-sm sm:text-base nav-link"
+              @click="handleNavClick"
             >
               {{ item.title }}
               <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-200 transition-all duration-300 group-hover:w-full"></span>
             </a>
-            <button class="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300 text-sm sm:text-base">
+            <button class="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-sm sm:text-base">
               Get Connected
             </button>
           </nav>
@@ -90,12 +91,12 @@
               v-for="item in menuItems" 
               :key="item.title"
               :href="item.href" 
-              class="block py-3 text-white font-medium hover:text-green-200 transition-colors duration-300"
-              @click="closeMobileMenu"
+              class="block py-3 text-white font-medium hover:text-green-200 transition-all duration-300"
+              @click="handleMobileNavClick"
             >
               {{ item.title }}
             </a>
-            <button class="mt-4 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300">
+            <button class="mt-4 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300">
               Get Connected
             </button>
           </div>
@@ -1060,6 +1061,9 @@
         </div>
       </div>
     </transition>
+
+    <!-- Navigation Indicator -->
+    <div v-if="isNavigating" class="fixed top-0 left-0 w-full h-1 bg-green-600 z-50 transition-all duration-1000" :style="{ width: `${navigationProgress}%` }"></div>
   </div>
 </template>
 
@@ -1073,6 +1077,10 @@ const mobileMenuOpen = ref(false);
 // Loading state
 const isLoading = ref(true);
 const isLoadingMore = ref(false);
+
+// Navigation state
+const isNavigating = ref(false);
+const navigationProgress = ref(0);
 
 // Menu items
 const menuItems = [
@@ -1623,6 +1631,84 @@ const closeAllDropdowns = (event) => {
   }
 };
 
+// Enhanced smooth scroll function
+const smoothScrollTo = (elementId, duration = 1000) => {
+  // Show navigation indicator
+  isNavigating.value = true;
+  navigationProgress.value = 0;
+  
+  // Animate progress bar
+  const progressInterval = setInterval(() => {
+    navigationProgress.value += 10;
+    if (navigationProgress.value >= 100) {
+      clearInterval(progressInterval);
+    }
+  }, duration / 10);
+  
+  // Find the target element
+  const target = document.querySelector(elementId);
+  if (!target) return;
+  
+  // Calculate the target position with offset for the header
+  const headerHeight = document.querySelector('header').offsetHeight;
+  const targetPosition = target.offsetTop - headerHeight - 20; // 20px extra padding
+  const startPosition = window.pageYOffset;
+  const distance = targetPosition - startPosition;
+  let startTime = null;
+  
+  // Easing function for smooth animation
+  const easeInOutCubic = (t, b, c, d) => {
+    t /= d/2;
+    if (t < 1) return c/2*t*t*t + b;
+    t -= 2;
+    return c/2*(t*t*t + 2) + b;
+  };
+  
+  // Animation function
+  const animation = (currentTime) => {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const run = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+    
+    window.scrollTo(0, run);
+    
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    } else {
+      // Ensure we land exactly at the target position
+      window.scrollTo(0, targetPosition);
+      
+      // Hide navigation indicator after a short delay
+      setTimeout(() => {
+        isNavigating.value = false;
+        navigationProgress.value = 0;
+      }, 300);
+    }
+  };
+  
+  // Start the animation
+  requestAnimationFrame(animation);
+};
+
+// Handle navigation clicks
+const handleNavClick = (event) => {
+  event.preventDefault();
+  const href = event.currentTarget.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    smoothScrollTo(href);
+  }
+};
+
+// Handle mobile navigation clicks
+const handleMobileNavClick = (event) => {
+  event.preventDefault();
+  const href = event.currentTarget.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    smoothScrollTo(href);
+    closeMobileMenu();
+  }
+};
+
 // Auto-advance carousels on mobile
 const startAutoSlide = () => {
   // Only auto-advance on mobile
@@ -1635,39 +1721,6 @@ const startAutoSlide = () => {
 };
 
 onMounted(() => {
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-      closeMobileMenu();
-    });
-  });
-  
-  // Add animation on scroll
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in');
-      }
-    });
-  }, observerOptions);
-  
-  document.querySelectorAll('section').forEach(section => {
-    observer.observe(section);
-  });
-  
   // Handle scroll for appbar and go to top button
   window.addEventListener('scroll', handleScroll);
   
@@ -1717,6 +1770,27 @@ header.scrolled {
   background-color: rgba(65, 67, 67, 0.7);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation link styles */
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #86efac;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 /* Custom animations */
@@ -1920,7 +1994,7 @@ header.scrolled {
   .modal-nav-button {
     padding: 8px;
   }
-  
+   
   .modal-nav-button svg {
     width: 24px;
     height: 24px;
@@ -1948,5 +2022,15 @@ header.scrolled {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+/* Smooth scrolling for all elements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navigation indicator animation */
+.nav-indicator {
+  transition: width 0.1s linear;
 }
 </style>
