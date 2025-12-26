@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vine & Branches - Drive Upload Integration</title>
+    
+    <!-- Vue 3 Global Build -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google API Client -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+
+    <!-- Configuration for Fonts/Icons -->
+    <style>
+        /* Custom Animations matching your Home.vue */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out forwards;
+        }
+        
+        /* Loader Animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Custom Scrollbar */
+        .gallery-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .gallery-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .gallery-scroll::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white font-sans text-gray-800">
+
+    <div id="app" class="relative">
+        <!-- 1. ADMIN / CONFIG PANEL (Top Right) -->
+        <!-- This allows you to paste your keys to test without editing code heavily -->
+        <div class="fixed top-4 right-4 z-50">
+            <button @click="showConfig = !showConfig" class="bg-gray-800 text-white p-2 rounded-full shadow-lg hover:bg-gray-700 transition" title="API Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+
+            <!-- Config Modal -->
+            <transition
+                enter-active-class="transition ease-out duration-200"
+                enter-from-class="opacity-0 scale-95"
+                enter-to-class="opacity-100 scale-100"
+            >
+                <div v-if="showConfig" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 p-4">
+                    <h3 class="font-bold text-green-800 mb-3">Google Drive Configuration</h3>
+                    
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Client ID (OAuth)</label>
+                    <input v-model="clientId" type="text" placeholder=".apps.googleusercontent.com" class="w-full text-xs border p-2 rounded mb-2 focus:ring-2 focus:ring-green-500 outline-none">
+
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">API Key</label>
+                    <input v-model="apiKey" type="text" placeholder="AIzaSy..." class="w-full text-xs border p-2 rounded mb-2 focus:ring-2 focus:ring-green-500 outline-none">
+                    
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Target Folder ID (Optional)</label>
+                    <input v-model="folderId" type="text" placeholder="1A2B3C..." class="w-full text-xs border p-2 rounded mb-4 focus:ring-2 focus:ring-green-500 outline-none">
+
+                    <div class="flex gap-2">
+                        <button @click="saveConfig" class="flex-1 bg-green-600 text-white text-xs py-2 rounded hover:bg-green-700">Save & Reload</button>
+                        <button @click="showConfig = false" class="flex-1 bg-gray-200 text-gray-700 text-xs py-2 rounded hover:bg-gray-300">Close</button>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-2">Keys are saved in local browser storage for this demo.</p>
+                </div>
+            </transition>
+        </div>
+
+        <!-- 2. HEADER -->
+        <header class="bg-green-800 text-white py-6 shadow-md">
+            <div class="container mx-auto px-6 flex items-center gap-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcTKSJUbRJDljxITqJwaT99FQM4XKFRQCO5Q&s" alt="Logo" class="h-12 w-auto bg-white rounded-lg p-1">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold">Vine & Branches Baptist Church</h1>
+                    <p class="text-green-200 text-sm">Gallery Upload Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. MAIN CONTENT -->
+        <main class="container mx-auto px-4 py-8">
+            
+            <!-- Status Bar -->
+            <div class="mb-6 flex flex-col sm:flex-row justify-between items-center bg-green-50 border border-green-200 p-4 rounded-lg">
+                <div class="flex items-center gap-3 mb-2 sm:mb-0">
+                    <div class="w-3 h-3 rounded-full" :class="isAuthenticated ? 'bg-green-500' : 'bg-red-500'"></div>
+                    <span class="text-sm font-semibold text-green-800">
+                        {{ isAuthenticated ? 'Connected to Google Drive' : 'Not Connected (Click Upload to Sign In)' }}
+                    </span>
+                </div>
+                <div v-if="userName" class="text-sm text-green-700 font-medium">
+                    Signed in as: {{ userName }}
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex justify-end mb-8">
+                <button 
+                    @click="triggerUpload"
+                    :disabled="isUploading"
+                    class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <svg v-if="!isUploading" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <span v-if="!isUploading">Upload Photo to Drive</span>
+                    <span v-else class="flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Uploading...
+                    </span>
+                </button>
+                <!-- Hidden Input -->
+                <input type="file" ref="fileInput" @change="handleFileSelect" class="hidden" accept="image/*">
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div 
+                    v-for="(image, index) in galleryImages" 
+                    :key="index"
+                    class="group relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 animate-fade-in"
+                    :style="{ animationDelay: index * 50 + 'ms' }"
+                >
+                    <div class="aspect-w-4 aspect-h-3 relative overflow-hidden bg-gray-100">
+                        <img :src="image.src" :alt="image.title" class="w-full h-64 object-cover object-center transform group-hover:scale-110 transition-transform duration-500">
+                        
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <p class="text-white font-semibold text-sm truncate">{{ image.title }}</p>
+                            <span v-if="image.fromDrive" class="text-xs text-green-300 flex items-center gap-1 mt-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+                                Synced to Drive
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-xs text-gray-500">{{ image.category }}</span>
+                        <a :href="image.src" target="_blank" class="text-green-600 hover:text-green-800 text-xs font-medium">View</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 4. TOAST NOTIFICATION -->
+        <transition
+            enter-active-class="transform ease-out duration-300 transition"
+            enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+            enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
+            leave-active-class="transition ease-in duration-100"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+        >
+            <div v-if="toast.visible" class="fixed bottom-4 right-4 z-50 max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
+                <div class="p-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <svg v-if="toast.type === 'success'" class="h-6 w-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg v-else class="h-6 w-6 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-3 w-0 flex-1 pt-0.5">
+                            <p class="text-sm font-medium text-gray-900">{{ toast.title }}</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ toast.message }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                // State
+                const galleryImages = ref([]);
+                const isUploading = ref(false);
+                const isAuthenticated = ref(false);
+                const userName = ref('');
+                const showConfig = ref(false);
+                const fileInput = ref(null);
+                
+                // Google API Config (User must fill these via the UI or code)
+                const clientId = ref(localStorage.getItem('vb_client_id') || '');
+                const apiKey = ref(localStorage.getItem('vb_api_key') || '');
+                const folderId = ref(localStorage.getItem('vb_folder_id') || '');
+
+                // Toast State
+                const toast = ref({ visible: false, title: '', message: '', type: 'success' });
+
+                // Initial Mock Data (Using your existing placeholders)
+                onMounted(() => {
+                    galleryImages.value = [
+                        { src: 'https://picsum.photos/seed/tanza-anniversary1/400/300.jpg', title: '18th Anniversary', category: 'Tanza' },
+                        { src: 'https://picsum.photos/seed/tanza-gift1/400/300.jpg', title: 'Gift Giving', category: 'Tanza' },
+                        { src: 'https://picsum.photos/seed/tanza-medical1/400/300.jpg', title: 'Medical Mission', category: 'Tanza' },
+                        { src: 'https://picsum.photos/seed/tanza-youth1/400/300.jpg', title: 'Youth Fellowship', category: 'Tanza' },
+                    ];
+                    
+                    // Initialize GAPI if keys exist
+                    if (clientId.value && apiKey.value) {
+                        initializeGapi();
+                    }
+                });
+
+                // --- Google API Logic ---
+
+                const initializeGapi = () => {
+                    gapi.load('client:auth2', () => {
+                        gapi.auth2.init({
+                            client_id: clientId.value,
+                            scope: 'https://www.googleapis.com/auth/drive.file',
+                            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+                        }).then(() => {
+                            const authInstance = gapi.auth2.getAuthInstance();
+                            updateSigninStatus(authInstance.isSignedIn.get());
+                            authInstance.isSignedIn.listen(updateSigninStatus);
+                        });
+                    });
+                };
+
+                const updateSigninStatus = (isSignedIn) => {
+                    isAuthenticated.value = isSignedIn;
+                    if (isSignedIn) {
+                        const user = gapi.auth2.getAuthInstance().currentUser.get();
+                        userName.value = user.getBasicProfile().getName();
+                    }
+                };
+
+                const handleAuthClick = () => {
+                    if (!clientId.value) {
+                        showToast('error', 'Missing Client ID', 'Please configure your Client ID in settings.');
+                        showConfig.value = true;
+                        return;
+                    }
+                    const authInstance = gapi.auth2.getAuthInstance();
+                    if (authInstance.isSignedIn.get()) {
+                        // Already signed in, proceed to upload
+                        return true; 
+                    } else {
+                        authInstance.signIn().then(() => {
+                            showToast('success', 'Signed In', 'You are now connected to Google Drive.');
+                        });
+                        return true;
+                    }
+                };
+
+                // --- Upload Logic ---
+
+                const triggerUpload = () => {
+                    if (!isAuthenticated.value) {
+                        handleAuthClick();
+                    } else {
+                        fileInput.value.click();
+                    }
+                };
+
+                const handleFileSelect = (event) => {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    // Check for keys again
+                    if (!clientId.value || !apiKey.value) {
+                        showToast('error', 'Configuration Error', 'Please set API Keys first.');
+                        showConfig.value = true;
+                        return;
+                    }
+
+                    isUploading.value = true;
+
+                    // Metadata for the file
+                    const metadata = {
+                        'name': file.name,
+                        'mimeType': file.type
+                    };
+
+                    // If folder ID is provided, add it to parents
+                    if (folderId.value) {
+                        metadata['parents'] = [folderId.value];
+                    }
+
+                    const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+
+                    // Use Fetch API for Multipart Upload (More reliable than gapi.client for binary files)
+                    const form = new FormData();
+                    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                    form.append('file', file);
+
+                    fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webViewLink', {
+                        method: 'POST',
+                        headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }),
+                        body: form
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message);
+                        }
+                        
+                        // Success! Construct the direct view link
+                        // format: https://drive.google.com/uc?export=view&id=FILE_ID
+                        const directLink = `https://drive.google.com/uc?export=view&id=${data.id}`;
+
+                        // Add to Gallery immediately
+                        galleryImages.value.unshift({
+                            src: directLink,
+                            title: data.name,
+                            category: 'New Upload',
+                            fromDrive: true
+                        });
+
+                        showToast('success', 'Upload Successful', `"${data.name}" has been added to your gallery.`);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        showToast('error', 'Upload Failed', error.message || 'Could not upload to Drive.');
+                    })
+                    .finally(() => {
+                        isUploading.value = false;
+                        // Reset input
+                        event.target.value = '';
+                    });
+                };
+
+                // --- Utility ---
+
+                const showToast = (type, title, message) => {
+                    toast.value = { visible: true, type, title, message };
+                    setTimeout(() => {
+                        toast.value.visible = false;
+                    }, 5000);
+                };
+
+                const saveConfig = () => {
+                    localStorage.setItem('vb_client_id', clientId.value);
+                    localStorage.setItem('vb_api_key', apiKey.value);
+                    localStorage.setItem('vb_folder_id', folderId.value);
+                    location.reload();
+                };
+
+                return {
+                    galleryImages,
+                    isUploading,
+                    isAuthenticated,
+                    userName,
+                    showConfig,
+                    fileInput,
+                    toast,
+                    // Config bindings
+                    clientId, apiKey, folderId,
+                    // Actions
+                    triggerUpload,
+                    handleFileSelect,
+                    saveConfig
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

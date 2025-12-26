@@ -140,7 +140,7 @@
           VINE AND BRANCHES BAPTIST CHURCH
         </h1>
         <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
-          "The steadfast love of LORD never ceases; His mercies never come to an end; they are new every morning; great is your faithfulness!." - Lamentations 3:22-23
+          "The steadfast love of the LORD never ceases; His mercies never come to an end; they are new every morning; great is your faithfulness!." - Lamentations 3:22-23
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animation-delay-600">
           <a href="#branches" class="px-4 sm:px-6 lg:px-8 py-3 bg-white text-green-700 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
@@ -168,7 +168,7 @@
           <div class="order-2 md:order-1">
             <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 mb-6">Welcome to Our Church</h2>
             <p class="text-sm sm:text-base md:text-lg text-gray-700 mb-6">
-              At Vine & Branches Baptist Church, we are a community of believers dedicated to growing in faith, serving our community, and sharing love of Christ with all.
+              At Vine & Branches Baptist Church, we are a community of believers dedicated to growing in faith, serving our community, and sharing the love of Christ with all.
             </p>
             <p class="text-sm sm:text-base md:text-lg text-gray-700 mb-6">
               Our church has grown to include multiple branches across the region, each committed to creating a welcoming environment where individuals and families can connect with God and each other through meaningful worship, biblical teaching, and authentic fellowship.
@@ -429,7 +429,7 @@
       </div>
     </section>
 
-      <!-- Gallery Section -->
+    <!-- Gallery Section -->
     <section id="gallery" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 text-green-800">Our Gallery</h2>
@@ -437,7 +437,7 @@
         
         <!-- Branch Selector -->
         <div class="mb-6">
-          <!-- Mobile Custom Dropdown for Branch -->
+          <!-- Mobile Custom Dropdown -->
           <div class="md:hidden">
             <div class="relative">
               <label class="block text-sm font-semibold text-gray-700 mb-2">Select Branch</label>
@@ -463,6 +463,7 @@
                 </svg>
               </div>
               
+              <!-- Dropdown Menu -->
               <transition
                 enter-active-class="transition ease-out duration-300"
                 enter-from-class="transform opacity-0 scale-95 -translate-y-2"
@@ -491,6 +492,9 @@
                           </svg>
                           <span class="font-medium">{{ branch.name }}</span>
                         </div>
+                        <svg v-if="activeGalleryBranch === branch.id" class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
                       </div>
                     </button>
                   </div>
@@ -499,13 +503,13 @@
             </div>
           </div>
           
-          <!-- Desktop Button View for Branch -->
+          <!-- Desktop Button View -->
           <div class="hidden md:flex justify-center">
             <div class="inline-flex rounded-lg shadow-md" role="group">
               <button 
                 v-for="branch in branches" 
                 :key="branch.id"
-                @click="selectBranch(branch.id)"
+                @click="activeGalleryBranch = branch.id"
                 :class="[
                   'px-4 sm:px-6 py-2.5 text-sm font-semibold transition-all duration-300',
                   activeGalleryBranch === branch.id 
@@ -519,9 +523,97 @@
           </div>
         </div>
         
-        <!-- Dynamic Category Selector (Based on Subfolders) -->
-        <div class="mb-6">
-          <!-- Mobile Custom Dropdown for Categories -->
+        <!-- Category Selector for Tanza Branch -->
+        <div v-if="activeGalleryBranch === 'tanza'" class="mb-6">
+          <!-- Mobile Custom Dropdown -->
+          <div class="md:hidden">
+            <div class="relative">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Select Category</label>
+              <div 
+                @click="toggleTanzaCategoryDropdown"
+                class="w-full px-4 py-3 bg-gradient-to-r from-green-50 to-white border-2 border-green-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 cursor-pointer flex items-center justify-between transition-all duration-200 shadow-sm hover:shadow-md"
+                :class="{ 'ring-2 ring-green-500 border-green-500': tanzaCategoryDropdownOpen }"
+              >
+                <span class="font-medium flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                  </svg>
+                  {{ tanzaCategories.find(c => c.id === activeTanzaCategory)?.name }}
+                </span>
+                <svg 
+                  class="w-5 h-5 text-green-600 transition-transform duration-200" 
+                  :class="{ 'rotate-180': tanzaCategoryDropdownOpen }" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+              
+              <!-- Dropdown Menu -->
+              <transition
+                enter-active-class="transition ease-out duration-300"
+                enter-from-class="transform opacity-0 scale-95 -translate-y-2"
+                enter-to-class="transform opacity-100 scale-100 translate-y-0"
+                leave-active-class="transition ease-in duration-200"
+                leave-from-class="transform opacity-100 scale-100 translate-y-0"
+                leave-to-class="transform opacity-0 scale-95 -translate-y-2"
+              >
+                <div 
+                  v-if="tanzaCategoryDropdownOpen" 
+                  class="absolute z-50 mt-2 w-full bg-white border-2 border-green-200 rounded-xl shadow-2xl"
+                  @click.stop
+                >
+                  <div class="py-2 max-h-60 overflow-auto">
+                    <button 
+                      v-for="category in tanzaCategories" 
+                      :key="category.id"
+                      @click="selectTanzaCategory(category.id)"
+                      class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 hover:text-green-700 focus:outline-none focus:bg-gradient-to-r focus:from-green-50 focus:to-green-100 focus:text-green-700 transition-all duration-150 border-l-4"
+                      :class="{ 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-green-500': activeTanzaCategory === category.id, 'border-transparent': activeTanzaCategory !== category.id }"
+                    >
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                          <svg v-if="activeTanzaCategory === category.id" class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                          <span class="font-medium">{{ category.name }}</span>
+                        </div>
+                        <svg v-if="activeTanzaCategory === category.id" class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </transition>
+            </div>
+          </div>
+          
+          <!-- Desktop Button View -->
+          <div class="hidden md:flex justify-center">
+            <div class="inline-flex rounded-lg shadow-md" role="group">
+              <button 
+                v-for="category in tanzaCategories" 
+                :key="category.id"
+                @click="activeTanzaCategory = category.id"
+                :class="[
+                  'px-3 sm:px-4 md:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
+                  activeTanzaCategory === category.id 
+                    ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                ]"
+              >
+                {{ category.name }}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Category Selector for Other Branches -->
+        <div v-else class="mb-6">
+          <!-- Mobile Custom Dropdown -->
           <div class="md:hidden">
             <div class="relative">
               <label class="block text-sm font-semibold text-gray-700 mb-2">Select Category</label>
@@ -534,7 +626,7 @@
                   <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                   </svg>
-                  {{ activeCategoryId === 'all' ? 'All Photos' : (currentSubFolders.find(f => f.id === activeCategoryId)?.name || 'Select Category') }}
+                  {{ activeGalleryCategory }}
                 </span>
                 <svg 
                   class="w-5 h-5 text-green-600 transition-transform duration-200" 
@@ -547,6 +639,7 @@
                 </svg>
               </div>
               
+              <!-- Dropdown Menu -->
               <transition
                 enter-active-class="transition ease-out duration-300"
                 enter-from-class="transform opacity-0 scale-95 -translate-y-2"
@@ -561,37 +654,23 @@
                   @click.stop
                 >
                   <div class="py-2 max-h-60 overflow-auto">
-                    <!-- All Button -->
                     <button 
-                      @click="selectCategory('all')"
+                      v-for="category in galleryCategories" 
+                      :key="category"
+                      @click="selectGalleryCategory(category)"
                       class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 hover:text-green-700 focus:outline-none focus:bg-gradient-to-r focus:from-green-50 focus:to-green-100 focus:text-green-700 transition-all duration-150 border-l-4"
-                      :class="{ 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-green-500': activeCategoryId === 'all', 'border-transparent': activeCategoryId !== 'all' }"
+                      :class="{ 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-green-500': activeGalleryCategory === category, 'border-transparent': activeGalleryCategory !== category }"
                     >
                       <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                           <svg v-if="activeCategoryId === 'all'" class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <svg v-if="activeGalleryCategory === category" class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                           </svg>
-                          <span class="font-medium">All Photos</span>
+                          <span class="font-medium">{{ category }}</span>
                         </div>
-                      </div>
-                    </button>
-
-                    <!-- Dynamic Subfolders -->
-                    <button 
-                      v-for="folder in currentSubFolders" 
-                      :key="folder.id"
-                      @click="selectCategory(folder.id)"
-                      class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 hover:text-green-700 focus:outline-none focus:bg-gradient-to-r focus:from-green-50 focus:to-green-100 focus:text-green-700 transition-all duration-150 border-l-4"
-                      :class="{ 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-green-500': activeCategoryId === folder.id, 'border-transparent': activeCategoryId !== folder.id }"
-                    >
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                          <svg v-if="activeCategoryId === folder.id" class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                          </svg>
-                          <span class="font-medium">{{ folder.name }}</span>
-                        </div>
+                        <svg v-if="activeGalleryCategory === category" class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
                       </div>
                     </button>
                   </div>
@@ -600,35 +679,21 @@
             </div>
           </div>
           
-          <!-- Desktop Button View for Categories -->
+          <!-- Desktop Button View -->
           <div class="hidden md:flex justify-center">
             <div class="inline-flex rounded-lg shadow-md" role="group">
-              <!-- All Button -->
               <button 
-                @click="selectCategory('all')"
+                v-for="category in galleryCategories" 
+                :key="category"
+                @click="activeGalleryCategory = category"
                 :class="[
                   'px-3 sm:px-4 md:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
-                  activeCategoryId === 'all' 
+                  activeGalleryCategory === category 
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                 ]"
               >
-                All Photos
-              </button>
-              
-              <!-- Dynamic Folders -->
-              <button 
-                v-for="folder in currentSubFolders" 
-                :key="folder.id"
-                @click="selectCategory(folder.id)"
-                :class="[
-                  'px-3 sm:px-4 md:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
-                  activeCategoryId === folder.id 
-                    ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-                ]"
-              >
-                {{ folder.name }}
+                {{ category }}
               </button>
             </div>
           </div>
@@ -673,6 +738,7 @@
         </div>
       </div>
     </section>
+
     <!-- Ministries Section -->
     <section id="ministries" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
@@ -921,7 +987,7 @@
               </a>
               <a href="#" class="bg-green-700 hover:bg-green-600 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919-4.919 1.266-.057 1.644-.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28.073-1.689.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
                 </svg>
               </a>
               <a href="#" class="bg-green-700 hover:bg-green-600 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-colors">
@@ -1070,29 +1136,16 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
-// --- CONFIGURATION ---
-const GOOGLE_API_KEY = 'AIzaSyCkQrffLv1ypjzG1ENw0_56QNgux0rQfYY'; 
-
-const FOLDER_IDS = {
-  tanza: '12-QEiZtjheNre4fF1X_P_VkEQxDxAS1W',
-  manila: '1SQiZULEows0k3J2Dhupr6KhcYYxM-95B',
-  lingayen: '1zrOUXMOGCpFn2GDFRwx4YSRnO2Hvt-AO'
-};
-// ------------------------------------------------
-
-// Appbar state
+// --- Appbar State ---
 const isScrolled = ref(false);
 const mobileMenuOpen = ref(false);
-
-// Loading state
 const isLoading = ref(true);
 const isLoadingMore = ref(false);
 
-// Navigation state
+// --- Navigation State ---
 const isNavigating = ref(false);
 const navigationProgress = ref(0);
 
-// Menu items
 const menuItems = [
   { title: 'Home', href: '#home' },
   { title: 'About', href: '#about' },
@@ -1103,7 +1156,7 @@ const menuItems = [
   { title: 'Contact', href: '#contact' }
 ];
 
-// Branch data
+// --- Branch Data ---
 const activeBranch = ref('tanza');
 const activeGalleryBranch = ref('tanza');
 
@@ -1114,35 +1167,19 @@ const branches = ref([
     address: '2332 Granate, San Andres Bukid, Manila, Metro Manila',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.509560281616!2d120.98321931484556!3d14.599512489777773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90b8e0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sManila%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
     directions: 'https://maps.app.goo.gl/kZwP1W4xPiDV6NENA',
-    serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
-    pastor: {
-      name: ' - ',
-      title: 'Senior Pastor',
-      image: 'https://picsum.photos/seed/pastor-manila/300/300.jpg',
-      bio: '-'
-    },
-    contact: {
-      phone: '(02) 123-4567',
-      email: 'manila@vineandbranches.org'
-    }
+    serviceTimes: 'Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
+    pastor: { name: 'Pastor Name', title: 'Senior Pastor', image: 'https://picsum.photos/seed/pastor-manila/300/300.jpg', bio: 'Bio goes here.' },
+    contact: { phone: '(02) 123-4567', email: 'manila@vineandbranches.org' }
   },
   {
     id: 'tanza',
     name: 'Tanza Branch',
     address: '222 Antero Soriano Hwy, Tanza, Cavite',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3865.8890883820385!2d120.86092531484097!3d14.39771188993426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c8e1b0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sTanza%2C%20Cavite%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
-    directions: 'https://maps.app.goo.gl/kZwP1W4xPiDV6NENA',
-    serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
-    pastor: {
-      name: ' - ',
-      title: 'Branch Pastor',
-      image: 'https://picsum.photos/seed/pastor-tanza/300/300.jpg',
-      bio: ' - '
-    },
-    contact: {
-      phone: '(046) 123-4567',
-      email: 'tanza@vineandbranches.org'
-    }
+    directions: 'https://www.google.com/maps/dir/?api=1&destination=Tanza%2C%20Cavite%2C%20Philippines',
+    serviceTimes: 'Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
+    pastor: { name: 'Pastor Name', title: 'Branch Pastor', image: 'https://picsum.photos/seed/pastor-tanza/300/300.jpg', bio: 'Bio goes here.' },
+    contact: { phone: '(046) 123-4567', email: 'tanza@vineandbranches.org' }
   },
   {
     id: 'lingayen',
@@ -1150,160 +1187,161 @@ const branches = ref([
     address: 'Libsong East, 012 Tomelden Street, Libsong Rd, East, Lingayen, 2401 Pangasinan',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.509560281616!2d120.98321931484556!3d14.599512489777773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90b8e0b5b5b%3A0x7a7b6b6b7a7b6b6b!2sLingayen%2C%20Pangasinan%2C%20Philippines!5e0!3m2!1sen!2s!4v1628767264245!5m2!1sen!2s',
     directions: 'https://maps.app.goo.gl/PcknS3o221VyQ8Yz5',
-    serviceTimes: 'Wednesday: 7:00 PM - 8:30 PM,  Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
-    pastor: {
-      name: ' - ',
-      title: 'Branch Pastor',
-      image: 'https://picsum.photos/seed/pastor-lingayen/300/300.jpg',
-      bio: ' - '
-    },
-    contact: {
-      phone: '(075) 123-4567',
-      email: 'lingayen@vineandbranches.org'
-    }
+    serviceTimes: 'Sunday School: 08:00 AM - 09:00 AM, Sunday: 9:00 AM - 11:30 AM',
+    pastor: { name: 'Pastor Name', title: 'Branch Pastor', image: 'https://picsum.photos/seed/pastor-lingayen/300/300.jpg', bio: 'Bio goes here.' },
+    contact: { phone: '(075) 123-4567', email: 'lingayen@vineandbranches.org' }
   }
 ]);
 
-const currentBranch = computed(() => {
-  return branches.value.find(branch => branch.id === activeBranch.value);
-});
+const currentBranch = computed(() => branches.value.find(branch => branch.id === activeBranch.value));
 
-// --- DYNAMIC GALLERY STATE ---
-// Unified category state. 'all' means show all folders.
-const activeCategoryId = ref('all');
-const currentSubFolders = ref([]); // Stores the list of folders fetched for the current branch
+// --- Gallery Configuration ---
+const galleryCategories = ['All', 'Worship', 'Events', 'Community', 'Outreach'];
+const activeGalleryCategory = ref('All');
 
-// Gallery pagination
+const tanzaCategories = [
+  { id: 'anniversary', name: '18th Anniversary' },
+  { id: 'gift-giving', name: '9th Gift Giving' },
+  { id: 'medical-mission', name: 'Medical Mission' },
+  { id: 'summer-camp', name: 'Summer Camp' },
+  { id: 'youth-fellowship', name: 'Youth Fellowship' },
+  { id: 'sunday-school', name: 'Sunday School' }
+];
+const activeTanzaCategory = ref('all');
+
+// --- Dynamic Image Loading Logic (FIXED) ---
+
+// Helper to clean filenames
+const formatTitle = (filename) => {
+  return filename
+    .replace(/\.[^/.]+$/, "") // Remove extension
+    .replace(/[-_]/g, " ")   // Replace dashes/underscores with spaces
+    .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize first letter
+};
+
+// THE FIX: Scan the ENTIRE folder structure at once
+const loadAllGalleryImages = () => {
+  const images = [];
+  
+  try {
+    // 1. Import EVERYTHING inside /src/assets/gallery recursively
+    // Using /**/* means "any file inside any subfolder"
+    const allModules = import.meta.glob('/src/assets/gallery/**/*', { eager: true });
+
+    Object.entries(allModules).forEach(([path, module]) => {
+      // Path example: /src/assets/gallery/tanza/anniversary/img1.jpg
+      
+      // 2. Parse the path
+      // We split by '/'. Depending on your OS/Config, ensure depth is correct.
+      // Expected: ['', 'src', 'assets', 'gallery', 'branchId', 'categoryId', 'filename']
+      const parts = path.split('/');
+      
+      // Safety check to ensure we are deep enough in the folder structure
+      if (parts.length < 6) return;
+
+      const branchId = parts[4];       // e.g. 'tanza'
+      const categoryId = parts[5];    // e.g. 'anniversary'
+      const filename = parts[6];       // e.g. 'img1.jpg'
+
+      // 3. Map branchId to Branch Name
+      const branchObj = branches.value.find(b => b.id === branchId);
+      if (!branchObj) return; // Skip if branch ID doesn't match our config
+
+      // 4. Map categoryId to Display Name
+      let displayCategory = categoryId;
+      if (branchId === 'tanza') {
+        // Check specific Tanza categories
+        const catObj = tanzaCategories.find(c => c.id === categoryId);
+        if (catObj) displayCategory = catObj.name;
+      } else {
+        // Capitalize for others
+        displayCategory = categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+      }
+
+      // 5. Create the image object
+      images.push({
+        src: module.default, // Vite provides the URL here
+        alt: formatTitle(filename),
+        title: formatTitle(filename),
+        category: displayCategory,
+        branch: branchObj.name,
+        categoryId: categoryId,
+        branchId: branchId
+      });
+    });
+    
+  } catch (error) {
+    console.error("Error loading gallery images:", error);
+  }
+
+  // 6. Fallback if no images found (for demo purposes)
+  if (images.length === 0) {
+    console.warn("No images found in /src/assets/gallery. Using placeholders.");
+    branches.value.forEach(branch => {
+      images.push({
+        src: `https://picsum.photos/seed/${branch.id}-demo/400/300.jpg`,
+        alt: 'Placeholder',
+        title: 'Demo Image',
+        category: 'Events',
+        branch: branch.name,
+        categoryId: 'events',
+        branchId: branch.id
+      });
+    });
+  }
+
+  return images;
+};
+
+// --- Gallery State Management ---
+const galleryImages = ref([]);
 const imagesPerPage = 8;
 const currentPage = ref(0);
 
-// Store all gallery images
-const galleryImages = ref([]);
-
-// --- HELPER: Fetch Subfolders (Works for ALL branches) ---
-const fetchSubFolders = async (rootFolderId) => {
-  if (GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') return [];
-  
-  try {
-    const query = `'${rootFolderId}' in parents and mimeType='application/vnd.google-apps.folder'`;
-    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&fields=files(id,name)`);
-    const data = await response.json();
-    return data.files || [];
-  } catch (error) {
-    console.error('Error fetching subfolders:', error);
-    return [];
-  }
-};
-
-// --- HELPER: Fetch Images from a specific folder ---
-const fetchImagesFromFolderId = async (folderId, categoryName, branchName) => {
-  if (GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') return [];
-
-  try {
-    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${GOOGLE_API_KEY}&fields=files(id,name,mimeType)&pageSize=100`);
-    const data = await response.json();
-
-    if (data.files && data.files.length > 0) {
-      const imageFiles = data.files.filter(f => f.mimeType && f.mimeType.startsWith('image/'));
-
-      return imageFiles.map(file => {
-        const imageUrl = `https://lh3.googleusercontent.com/d/${file.id}=w800-h600`;
-        
-        return {
-          src: imageUrl,
-          alt: file.name,
-          title: file.name.split('.').slice(0, -1).join('.').replace(/-/g, ' '), 
-          category: categoryName,
-          branch: branchName
-        };
-      });
-    }
-  } catch (error) {
-    console.error(`Error fetching images from folder ${folderId}:`, error);
-  }
-  return [];
-};
-
-// --- MAIN FUNCTION: Load Gallery Content (Branch Agnostic) ---
-const loadGalleryContent = async () => {
-  if (GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') return;
-  
-  isLoading.value = true;
-  galleryImages.value = [];
-  currentSubFolders.value = []; // Reset folders
-
-  try {
-    const rootFolderId = FOLDER_IDS[activeGalleryBranch.value];
-    const branchName = branches.value.find(b => b.id === activeGalleryBranch.value)?.name;
+onMounted(() => {
+  // Simulate initial loading
+  setTimeout(() => {
+    // Load everything once at startup
+    galleryImages.value = loadAllGalleryImages();
     
-    if (!rootFolderId) {
-      console.warn('Folder ID not found for branch:', activeGalleryBranch.value);
-      isLoading.value = false;
-      return;
-    }
-
-    // 1. Fetch Sub-folders for this branch (Tanza, Manila, Lingayen - all treated same)
-    const folders = await fetchSubFolders(rootFolderId);
-    currentSubFolders.value = folders;
-
-    let allImages = [];
-
-    // 2. Determine category selection
-    if (activeCategoryId.value === 'all') {
-      // "ALL": Fetch images from EVERY sub-folder found
-      if (folders.length > 0) {
-        const promises = folders.map(folder => 
-          fetchImagesFromFolderId(folder.id, folder.name, branchName)
-        );
-        const results = await Promise.all(promises);
-        allImages = results.flat();
-      } else {
-        // Fallback: If no subfolders exist, look in root?
-        // Currently strictly following subfolder logic. If root has images directly, they won't show here.
-        console.log("No subfolders found in this branch.");
-      }
-    } else {
-      // "SPECIFIC": Find the folder by ID
-      const targetFolder = folders.find(f => f.id === activeCategoryId.value);
-      if (targetFolder) {
-        allImages = await fetchImagesFromFolderId(targetFolder.id, targetFolder.name, branchName);
-      }
-    }
-    
-    galleryImages.value = allImages;
-
-  } catch (error) {
-    console.error("Critical Error loading gallery:", error);
-  } finally {
     isLoading.value = false;
-  }
-};
-
-// Watch for changes in Branch OR Category
-watch([activeGalleryBranch, activeCategoryId], () => {
-  resetPagination();
-  loadGalleryContent();
-}, { deep: true });
-
-// Computed property to return images (Already filtered by logic in loadGalleryContent)
-const filteredGalleryImages = computed(() => {
-  return galleryImages.value;
+  }, 1500);
 });
 
-// Computed properties for gallery pagination
+// --- Filtering & Pagination Logic ---
+const filteredGalleryImages = computed(() => {
+  let filtered = galleryImages.value;
+  
+  // Filter by Branch
+  if (activeGalleryBranch.value === 'tanza') {
+    filtered = filtered.filter(image => image.branchId === 'tanza');
+    
+    // Filter by Tanza Category
+    if (activeTanzaCategory.value !== 'all') {
+      filtered = filtered.filter(image => image.categoryId === activeTanzaCategory.value);
+    }
+  } else {
+    // Other branches
+    filtered = filtered.filter(image => image.branchId === activeGalleryBranch.value);
+    
+    // Filter by Generic Category (string match)
+    if (activeGalleryCategory.value !== 'All') {
+      // Filter where category (display name) matches the selection
+      filtered = filtered.filter(image => image.category.toLowerCase() === activeGalleryCategory.value.toLowerCase());
+    }
+  }
+  
+  return filtered;
+});
+
 const displayedGalleryImages = computed(() => {
   const start = 0;
   const end = (currentPage.value + 1) * imagesPerPage;
   return filteredGalleryImages.value.slice(start, end);
 });
 
-const hasMoreImages = computed(() => {
-  return displayedGalleryImages.value.length < filteredGalleryImages.value.length;
-});
-
-const remainingImagesCount = computed(() => {
-  return filteredGalleryImages.value.length - displayedGalleryImages.value.length;
-});
+const hasMoreImages = computed(() => displayedGalleryImages.value.length < filteredGalleryImages.value.length);
+const remainingImagesCount = computed(() => filteredGalleryImages.value.length - displayedGalleryImages.value.length);
 
 const loadMoreImages = () => {
   if (isLoadingMore.value) return;
@@ -1311,19 +1349,17 @@ const loadMoreImages = () => {
   setTimeout(() => {
     currentPage.value++;
     isLoadingMore.value = false;
-  }, 1000);
-}
-
-const resetPagination = () => {
-  currentPage.value = 0;
+  }, 500);
 };
 
-// Image modal
+const resetPagination = () => { currentPage.value = 0; };
+watch([activeGalleryBranch, activeTanzaCategory, activeGalleryCategory], resetPagination);
+
+// --- Modal & Interactions ---
 const isImageModalOpen = ref(false);
 const selectedImage = ref({});
 const currentImageIndex = ref(0);
 const isImageChanging = ref(false);
-
 const touchStartX = ref(0);
 const touchEndX = ref(0);
 const minSwipeDistance = 50;
@@ -1346,7 +1382,7 @@ const navigateImage = (direction) => {
   setTimeout(() => {
     currentImageIndex.value = (currentImageIndex.value + direction + filteredGalleryImages.value.length) % filteredGalleryImages.value.length;
     selectedImage.value = filteredGalleryImages.value[currentImageIndex.value];
-    setTimeout(() => { isImageChanging.value = false; }, 300);
+    setTimeout(() => isImageChanging.value = false, 300);
   }, 50);
 };
 
@@ -1356,90 +1392,81 @@ const goToImage = (index) => {
   setTimeout(() => {
     currentImageIndex.value = index;
     selectedImage.value = filteredGalleryImages.value[currentImageIndex.value];
-    setTimeout(() => { isImageChanging.value = false; }, 300);
+    setTimeout(() => isImageChanging.value = false, 300);
   }, 50);
 };
 
-const handleTouchStart = (e) => { touchStartX.value = e.changedTouches[0].screenX; };
-const handleTouchMove = (e) => { touchEndX.value = e.changedTouches[0].screenX; };
+const handleTouchStart = (e) => touchStartX.value = e.changedTouches[0].screenX;
+const handleTouchMove = (e) => touchEndX.value = e.changedTouches[0].screenX;
 const handleTouchEnd = () => {
   if (!touchStartX.value || !touchEndX.value) return;
   const distance = touchStartX.value - touchEndX.value;
   if (Math.abs(distance) > minSwipeDistance) {
-    if (distance > 0) navigateImage(1); else navigateImage(-1);
+    navigateImage(distance > 0 ? 1 : -1);
   }
-  touchStartX.value = 0; touchEndX.value = 0;
+  touchStartX.value = 0;
+  touchEndX.value = 0;
 };
 
-// Go to top
+// --- Scroll & Nav ---
 const showGoToTop = ref(false);
 const handleScroll = () => {
   showGoToTop.value = window.scrollY > 300;
   isScrolled.value = window.scrollY > 50;
 };
+
 const scrollToTop = () => {
-  const startPosition = window.pageYOffset;
-  const startTime = performance.now();
-  const duration = 800;
-  const easeInOutQuad = (t, b, c, d) => {
-    t /= d/2; if (t < 1) return c/2*t*t + b; t--; return -c/2 * (t*(t-2) - 1) + b;
-  };
-  const animateScroll = (currentTime) => {
-    const timeElapsed = currentTime - startTime;
-    const run = easeInOutQuad(timeElapsed, startPosition, -startPosition, duration);
-    window.scrollTo(0, run);
-    if (timeElapsed < duration) requestAnimationFrame(animateScroll);
-  };
-  requestAnimationFrame(animateScroll);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value; };
-const closeMobileMenu = () => { mobileMenuOpen.value = false; };
+const toggleMobileMenu = () => mobileMenuOpen.value = !mobileMenuOpen.value;
+const closeMobileMenu = () => mobileMenuOpen.value = false;
 
-// Carousel controls
 const serviceSlideIndex = ref(0);
 const ministrySlideIndex = ref(0);
 
-// Dropdown state
+// --- Dropdowns ---
 const branchDropdownOpen = ref(false);
-const categoryDropdownOpen = ref(false); // Now represents the unified category dropdown
+const categoryDropdownOpen = ref(false);
+const tanzaCategoryDropdownOpen = ref(false);
 
 const toggleBranchDropdown = () => {
   branchDropdownOpen.value = !branchDropdownOpen.value;
   categoryDropdownOpen.value = false;
+  tanzaCategoryDropdownOpen.value = false;
 };
-
 const toggleCategoryDropdown = () => {
   categoryDropdownOpen.value = !categoryDropdownOpen.value;
   branchDropdownOpen.value = false;
+  tanzaCategoryDropdownOpen.value = false;
 };
-
-const selectBranch = (branchId) => {
-  activeGalleryBranch.value = branchId;
+const toggleTanzaCategoryDropdown = () => {
+  tanzaCategoryDropdownOpen.value = !tanzaCategoryDropdownOpen.value;
   branchDropdownOpen.value = false;
-  activeCategoryId.value = 'all'; // Reset to All when changing branch
-  resetPagination();
+  categoryDropdownOpen.value = false;
 };
 
-const selectCategory = (categoryId) => {
-  activeCategoryId.value = categoryId;
-  categoryDropdownOpen.value = false;
-  resetPagination();
-};
+const selectBranch = (id) => { activeGalleryBranch.value = id; branchDropdownOpen.value = false; resetPagination(); };
+const selectGalleryCategory = (cat) => { activeGalleryCategory.value = cat; categoryDropdownOpen.value = false; resetPagination(); };
+const selectTanzaCategory = (id) => { activeTanzaCategory.value = id; tanzaCategoryDropdownOpen.value = false; resetPagination(); };
 
 const closeAllDropdowns = (event) => {
   if (!event.target.closest('.relative')) {
     branchDropdownOpen.value = false;
     categoryDropdownOpen.value = false;
+    tanzaCategoryDropdownOpen.value = false;
   }
 };
 
-// Smooth scroll
+// --- Smooth Scroll ---
 const smoothScrollTo = (elementId, duration = 1000) => {
-  isNavigating.value = true; navigationProgress.value = 0;
+  isNavigating.value = true;
+  navigationProgress.value = 0;
   const progressInterval = setInterval(() => {
-    navigationProgress.value += 10; if (navigationProgress.value >= 100) clearInterval(progressInterval);
+    navigationProgress.value += 10;
+    if (navigationProgress.value >= 100) clearInterval(progressInterval);
   }, duration / 10);
+
   const target = document.querySelector(elementId);
   if (!target) return;
   const headerHeight = document.querySelector('header').offsetHeight;
@@ -1447,9 +1474,14 @@ const smoothScrollTo = (elementId, duration = 1000) => {
   const startPosition = window.pageYOffset;
   const distance = targetPosition - startPosition;
   let startTime = null;
+
   const easeInOutCubic = (t, b, c, d) => {
-    t /= d/2; if (t < 1) return c/2*t*t*t + b; t -= 2; return c/2*(t*t*t + 2) + b;
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t * t + b;
+    t -= 2;
+    return c / 2 * (t * t * t + 2) + b;
   };
+
   const animation = (currentTime) => {
     if (startTime === null) startTime = currentTime;
     const timeElapsed = currentTime - startTime;
@@ -1464,15 +1496,15 @@ const smoothScrollTo = (elementId, duration = 1000) => {
   requestAnimationFrame(animation);
 };
 
-const handleNavClick = (event) => {
-  event.preventDefault();
-  const href = event.currentTarget.getAttribute('href');
+const handleNavClick = (e) => {
+  e.preventDefault();
+  const href = e.currentTarget.getAttribute('href');
   if (href && href.startsWith('#')) smoothScrollTo(href);
 };
 
-const handleMobileNavClick = (event) => {
-  event.preventDefault();
-  const href = event.currentTarget.getAttribute('href');
+const handleMobileNavClick = (e) => {
+  e.preventDefault();
+  const href = e.currentTarget.getAttribute('href');
   if (href && href.startsWith('#')) {
     smoothScrollTo(href);
     closeMobileMenu();
@@ -1489,8 +1521,8 @@ const startAutoSlide = () => {
 };
 
 onMounted(() => {
-  loadGalleryContent();
   window.addEventListener('scroll', handleScroll);
+  
   const handleKeyDown = (e) => {
     if (!isImageModalOpen.value) return;
     if (e.key === 'ArrowLeft') navigateImage(-1);
@@ -1501,6 +1533,7 @@ onMounted(() => {
   document.addEventListener('click', closeAllDropdowns);
   document.addEventListener('touchstart', closeAllDropdowns);
   startAutoSlide();
+
   onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
     window.removeEventListener('keydown', handleKeyDown);
